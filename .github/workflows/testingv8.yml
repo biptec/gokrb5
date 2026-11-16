@@ -23,12 +23,12 @@ jobs:
       DNSUTILS_OVERRIDE_NS: 127.0.88.53:53
     steps:
       - name: Set up Go ${{ matrix.go }}
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v7.0.0
         with:
           go-version: ${{ matrix.go }}
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7.0.1
         with:
           ref: ${{ github.ref }}
 
