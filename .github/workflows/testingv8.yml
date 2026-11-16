@@ -44,6 +44,12 @@ jobs:
           go test -race ./...
         id: unitTests
 
+      - name: Vet
+        run: |
+          cd ${GITHUB_WORKFLOW}
+          go vet ./...
+        id: vet
+
       - name: Start integration test dependencies
         run: |
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq krb5-user
