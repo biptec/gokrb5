@@ -12,6 +12,13 @@ cfg, err := config.NewFromString(krb5Str) //String must have appropriate newline
 cfg, err := config.NewFromReader(reader)
 cfg, err := config.NewFromScanner(scanner)
 ```
+
+### KDC address selection
+
+For each configured KDC hostname (including targets discovered through Kerberos DNS SRV records), the client resolves both A and AAAA addresses. Resolved candidates are attempted with a bounded stagger while preserving the KDC order returned by the configuration resolver. The first valid KDC response wins, and losing connections are closed.
+
+DNS resolution has a one-second window. Each UDP or TCP exchange has a shared five-second deadline covering resolution and all candidate attempts, so an unavailable address family or KDC does not add a separate timeout for every address. The existing UDP/TCP preference and protocol fallback behavior is unchanged.
+
 ### Keytab files
 Standard keytab files can be read from a file or from a slice of bytes:
 ```go
